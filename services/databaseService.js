@@ -21,15 +21,31 @@ const databaseService = () =>{
         return knex(table).select();
     };
 
+
     const crearAlumno = (control, nombre, semestre) => {
         return knex(table).insert({
             control: control,
             nombre: nombre,
             semestre: semestre
         });
-    }    
+    }
 
-    return {crearAlumno, getAlumno};
+    const eliminarAlumno = (alumnoId) =>{
+        return knex(table).where({ id: alumnoId }).del();
+    }
+
+    const editarAlumno = (alumnoId, nuevoControl, nuevoNombre, nuevoSemestre) => {
+        return knex(table)
+            .where({ id: alumnoId })
+            .update({
+                control: nuevoControl,
+                nombre: nuevoNombre,
+                semestre: nuevoSemestre
+            });
+    };
+    
+
+    return {crearAlumno, getAlumno, eliminarAlumno, editarAlumno};
 }
 
 module.exports = {
